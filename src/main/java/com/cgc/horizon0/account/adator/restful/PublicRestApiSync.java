@@ -17,5 +17,5 @@ public interface PublicRestApiSync {
     @GET
     @Path("/name/{name}")
     Set<Country> getByName(@PathParam String name);
-    
+
 }

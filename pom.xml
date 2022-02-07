@@ -131,25 +131,25 @@
   </dependencies>
   <build>
     <plugins>
-    <plugin>
-      <artifactId>exec-maven-plugin</artifactId>
-      <groupId>org.codehaus.mojo</groupId>
-      <executions>
-        <execution><!-- Run our version calculation script -->
-          <id>Apply OCP tempalte</id>
-          <phase>package</phase>
-          <goals>
-            <goal>exec</goal>
-          </goals>
-          <configuration>
-            <executable>${basedir}/.openshift/apply.sh </executable>
-            <arguments>
-              <argument>${quarkus.kubernetes.deploy}</argument>
-            </arguments>
-          </configuration>
-        </execution>
-      </executions>
-    </plugin>    
+      <!-- <plugin>
+        <artifactId>exec-maven-plugin</artifactId>
+        <groupId>org.codehaus.mojo</groupId>
+        <executions>
+          <execution>
+            <id>Apply OCP tempalte</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${basedir}/.openshift/apply.sh </executable>
+              <arguments>
+                <argument>${quarkus.kubernetes.deploy}</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>     -->
       <plugin>
         <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
@@ -189,7 +189,7 @@
             <directory>${project.build.directory}/generated-sources</directory>
           </directories>
         </configuration>
-      </plugin>
+      </plugin>      
     </plugins>
   </build>
   <profiles>

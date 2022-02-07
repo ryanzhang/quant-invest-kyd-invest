@@ -21,9 +21,11 @@ public class EquityResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public HashMap greeting() {
-        return new HashMap<String, String>(){{
-            put("Majesty", "Welcome to Quant Invest!");
-        }};
+        return new HashMap<String, String>() {
+            {
+                put("Majesty", "Welcome to Quant Invest!");
+            }
+        };
     }
 
 }

@@ -14,5 +14,5 @@ public interface GoogleServiceRequireProxyAsync {
     @GET
     @Path("/")
     CompletionStage<String> fetchWithoutAuthentication();
-  
+
 }

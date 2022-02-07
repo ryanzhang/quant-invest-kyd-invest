@@ -13,5 +13,5 @@ public interface PrivateRestApiSync {
     @GET
     @Path("/openid-configuration")
     public JsonObject getOpenIdConfiguration();
-    
+
 }

@@ -25,10 +25,9 @@ public class MailResource {
     @GET
     @Path("/postmail")
     @Blocking
-    public void sendingHtml(){
-        String body = "<strong>Hello!</strong>" + "\n" +
-                "<p>Here is an image for you: <img src=\"cid:my-image@quarkus.io\"/></p>" +
-                "<p>Regards</p>";
+    public void sendingHtml() {
+        String body = "<strong>Hello!</strong>" + "\n"
+                + "<p>Here is an image for you: <img src=\"cid:my-image@quarkus.io\"/></p>" + "<p>Regards</p>";
         mailer.send(Mail.withHtml("ryan.zhangcheng@qq.com", "testing email from quarkus", body));
     }
 
@@ -41,18 +40,20 @@ public class MailResource {
     public Response sendEmailVerification(@QueryParam("username") String username) {
 
         // emailVerificationService.sendRegistrationEmailVerification(username);
-        return Response.status(Response.Status.OK).entity(
-                new HashMap<String, String>() {{
-                    put("code", "200");
-                    put("msg", "testing");
-                    put("timestamp", LocalDateTime.now().toString());
-                }}).build();
+        return Response.status(Response.Status.OK).entity(new HashMap<String, String>() {
+            {
+                put("code", "200");
+                put("msg", "testing");
+                put("timestamp", LocalDateTime.now().toString());
+            }
+        }).build();
     }
 
     @Path("/verify")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String verifyEmail(@QueryParam("verificationKey") String verificationKey, @QueryParam("username") String username){
+    public String verifyEmail(@QueryParam("verificationKey") String verificationKey,
+            @QueryParam("username") String username) {
 
         return emailVerificationSuccessful.render();
     }

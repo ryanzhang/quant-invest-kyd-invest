@@ -19,9 +19,7 @@ show:             ## Show the current environment.
 
 .PHONY: fmt
 fmt:              ## Format code using black & isort.
-	$(ENV_PREFIX)isort kupy/
-	$(ENV_PREFIX)black -l 79 kupy/
-	$(ENV_PREFIX)black -l 79 tests/
+	mvn formatter:format
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.

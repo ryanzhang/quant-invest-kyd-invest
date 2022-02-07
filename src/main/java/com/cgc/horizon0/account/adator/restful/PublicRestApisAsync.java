@@ -18,5 +18,5 @@ public interface PublicRestApisAsync {
     @GET
     @Path("/name/{name}")
     CompletionStage<Set<Country>> getCountryJsonByName(@PathParam("name") String name);
-  
+
 }

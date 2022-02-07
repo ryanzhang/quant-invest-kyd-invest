@@ -1,13 +1,8 @@
 package com.cgc.horizon0.account.vo;
 
 /**
- * Created by IntelliJ IDEA.
- * Project : horizon0-account
- * User: hendisantika
- * Email: hendisantika@gmail.com
- * Telegram : @hendisantika34
- * Date: 14/10/21
- * Time: 13.48
+ * Created by IntelliJ IDEA. Project : horizon0-account User: hendisantika Email: hendisantika@gmail.com Telegram
+ * : @hendisantika34 Date: 14/10/21 Time: 13.48
  */
 public class AccountVO {
     public Long id;

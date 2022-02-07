@@ -26,23 +26,26 @@ public class CountryResource {
     @RestClient
     PublicRestApisAsync commonOpenApisService;
 
-    @ConfigProperty( name = "quarkus.profile" )
+    @ConfigProperty(name = "quarkus.profile")
     String currentProfile;
 
     @Inject
     Logger logger;
+
     /**
-     * agent calling an api to get payload from another microservice or open API.
-     * max retries 3 times.
-     * fallbacks on default empty json array payload.
-     * @param name - country name in lowercase (e.g. peru)
+     * agent calling an api to get payload from another microservice or open API. max retries 3 times. fallbacks on
+     * default empty json array payload.
+     * 
+     * @param name
+     *            - country name in lowercase (e.g. peru)
+     * 
      * @return List<JsonArray> (CompletionStage - the future of the http api payload)
      */
     @GET
     @Path("/name/{name}")
     @Retry(maxRetries = 3)
     @Fallback(fallbackMethod = "getCountryDefault")
-    public CompletionStage<Set<Country>> getCountry(@PathParam("name") String name){
+    public CompletionStage<Set<Country>> getCountry(@PathParam("name") String name) {
         logger.info("Current Profile:" + currentProfile);
 
         return commonOpenApisService.getCountryJsonByName(name);
@@ -50,7 +53,10 @@ public class CountryResource {
 
     /**
      * default empty json array for fallback of get-country-by-name.
-     * @param name - @PathParam("name") String name
+     * 
+     * @param name
+     *            - @PathParam("name") String name
+     * 
      * @return List<JsonArray> (CompletionStage - the future of the http api payload)
      */
     public CompletionStage<Set<Country>> getCountryDefault(String name) {

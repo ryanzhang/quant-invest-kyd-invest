@@ -18,18 +18,18 @@ public class EmailService {
     @Inject
     Mailer mailer;
 
-    public boolean send(EmailRecipientVO recipient, String subject, String body){
+    public boolean send(EmailRecipientVO recipient, String subject, String body) {
         try {
             mailer.send(Mail.withHtml(recipient.getTo(), subject, body));
             return true;
-            
+
         } catch (Exception e) {
-            //TODO: handle exception
+            // TODO: handle exception
             log.error(e);
             e.printStackTrace();
             return false;
         }
 
     }
-    
+
 }
