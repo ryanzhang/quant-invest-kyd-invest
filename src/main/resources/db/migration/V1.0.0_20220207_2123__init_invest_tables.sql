@@ -1,0 +1,37 @@
+CREATE SCHEMA IF NOT EXISTS invest;
+CREATE TABLE IF NOT EXISTS invest.big_small_etf_rotate (
+    id BIGINT NOT NULL,
+    account_id INTEGER,
+    trade_date DATE,
+    is_suspend INTEGER,
+    is_skip_trade INTEGER,
+    ticker_x VARCHAR(255),
+    pre_close_price_x FLOAT,
+    open_price_x FLOAT,
+    close_price_x FLOAT,
+    chg_x FLOAT,
+    chg_pct_x FLOAT,
+    ticker_y VARCHAR(255),
+    pre_close_price_y FLOAT,
+    open_price_y FLOAT,
+    close_price_y FLOAT,
+    chg_y FLOAT,
+    chg_pct_y FLOAT,
+    big_mom FLOAT,
+    small_mom FLOAT,
+    style VARCHAR(255),
+    pos VARCHAR(255),
+    pos_chg_pct FLOAT,
+    vol FLOAT,
+    trade_fee FLOAT,
+    big_net FLOAT,
+    small_net FLOAT,
+    strategy_net FLOAT,
+    amount FLOAT,
+    total_amount FLOAT,
+    update_time TIMESTAMP,
+    comment VARCHAR(255),
+    PRIMARY KEY (id)
+);
+CREATE SEQUENCE IF NOT EXISTS invest.big_small_etf_rotate_id_seq START WITH 1 INCREMENT BY 1;
+CREATE UNIQUE INDEX IF NOT EXISTS equity_idx ON invest.big_small_etf_rotate(account_id, trade_date);

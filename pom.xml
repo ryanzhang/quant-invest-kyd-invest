@@ -130,6 +130,113 @@
 
   </dependencies>
   <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${version.war.plugin}</version>
+                    <configuration>
+                        <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Java-Version>${java.version}</Java-Version>
+                            <Java-Vendor>${java.vendor}</Java-Vendor>
+                            <Os-Name>${os.name}</Os-Name>
+                            <Os-Arch>${os.arch}</Os-Arch>
+                            <Os-Version>${os.version}</Os-Version>
+                        </manifestEntries>
+                        </archive>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+                
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                    <configuration>
+                        <trimStackTrace>false</trimStackTrace>
+                        <systemProperties>
+                          <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+                        </systemProperties>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.9.1</version>
+                    <configuration>
+                    <locales>en,cn</locales>
+                    </configuration>                    
+                </plugin>                 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>  
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>9.2</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <linkXRef>false</linkXRef>
+                        <configLocation>checkstyle/ryan_base_google_checks_9_2.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <!-- <consoleOutput>true</consoleOutput> -->
+                        <!-- <failsOnError>true</failsOnError> -->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>3.15.0</version>
+                    <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.8</targetJdk>
+                    <excludes>
+                        <exclude>**/*Bean.java</exclude>
+                        <exclude>**/generated/*.java</exclude>
+                    </excludes>
+                    <excludeRoots>
+                        <excludeRoot>target/generated-sources/stubs</excludeRoot>
+                    </excludeRoots>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>3.0.5</version>
+                </plugin> 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jxr-plugin</artifactId>
+                    <version>2.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.6</version>
+                    <configuration>
+                        <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
+                        <dataFile>target/coverage-reports/jacoco-unit.exec</dataFile>
+                    </configuration>                    
+                </plugin>                                                               
+            </plugins>
+        </pluginManagement>
     <plugins>
       <!-- <plugin>
         <artifactId>exec-maven-plugin</artifactId>
@@ -189,9 +296,176 @@
             <directory>${project.build.directory}/generated-sources</directory>
           </directories>
         </configuration>
-      </plugin>      
+      </plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>prepare-unit-tests</id>
+						<goals>
+						<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>verify</phase>
+						<goals>
+						<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-sitedescriptor</id>
+                        <!-- fetch site.xml before creating site documentation -->
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                        <outputDirectory>${basedir}/src/site/</outputDirectory>
+                        <resources>          
+                            <resource>                  
+                                <directory>${site.basedir}/src/site/</directory>
+                                <includes>
+                                    <include>**/site.xml</include>
+                                </includes>
+                            </resource>
+                        </resources>              
+                        </configuration>            
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>checkstyle</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <!-- <configuration>
+                            <failOnViolation>true</failOnViolation>
+                            <failsOnError>true</failsOnError>
+                        </configuration> -->
+                    </execution>
+                </executions>                
+            </plugin> 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.1</version>
+            </plugin> 
     </plugins>
   </build>
+   <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>checkstyle</report>
+              </reports>
+            </reportSet>          
+            <reportSet>
+              <id>aggregate</id>
+              <inherited>false</inherited>
+              <reports>
+                <report>checkstyle-aggregate</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <configuration>
+            <linkXref>true</linkXref>
+            <sourceEncoding>utf-8</sourceEncoding>
+            <minimumTokens>100</minimumTokens>
+            <targetJdk>1.5</targetJdk>
+            <excludes>
+                <exclude>**/*Bean.java</exclude>
+                <exclude>**/generated/*.java</exclude>
+            </excludes>
+            <excludeRoots>
+                <excludeRoot>target/generated-sources/stubs</excludeRoot>
+            </excludeRoots>
+            </configuration>
+            <reportSets>
+            <reportSet><!-- by default, id = "default" -->
+                <reports><!-- select non-aggregate reports -->
+                <report>pmd</report>
+                <report>cpd</report>
+                </reports>
+            </reportSet>
+            <reportSet><!-- aggregate reportSet, to define in poms having modules -->
+                <id>aggregate</id>
+                <inherited>false</inherited> <!-- don't run aggregate in child modules -->
+                <reports>
+                <report>aggregate-pmd</report>
+                <report>aggregate-cpd</report>
+                </reports>
+            </reportSet>
+            </reportSets>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+        </plugin> 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <reportSets>
+            <reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>            
+              <reports>
+                <report>aggregate</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+          <!-- <reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>
+            <reports>
+              <report>report-aggregate</report>
+            </reports>
+          </reportSet>-->
+        </reportSets>
+      </plugin>                               
+      </plugins>
+    </reporting>
+    <distributionManagement>
+        <site>
+        <id>dev sites</id>
+        <name>Deploy folder</name>
+        <url>file:///tmp/dev-site/</url>
+        </site>
+    </distributionManagement>  
   <profiles>
     <profile>
       <id>dev</id>
