@@ -31,9 +31,9 @@ lint:             ## Run pep8, black, mypy linters.
 .PHONY: release
 release:          ## Create a new tag for release.	
 	@$(ENV_PREFIX)gitchangelog > HISTORY.md
-	@TAG=v$(shell cat VERSION);\
+	@TAG=$(shell mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate     -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)')
 	sed -i "s=unreleased=$${TAG}=g" HISTORY.md||True;\
-	git add VERSION HISTORY.md;\
+	git add pom.xml HISTORY.md;\
 	git commit -m "release: version $${TAG} 🚀";\
 	echo "creating git tag : $${TAG}";\
 	git tag $${TAG}; 
@@ -62,8 +62,6 @@ systest:
 tag-stage:
 	@oc project|grep "classic-dev"
 	@oc apply -f .openshift/dev/cm.yaml
-	@git checkout VERSION
-	@
 	@PRE_VERSION=$(shell mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate     -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)')
 	read -p "Version? (provide the next x.y.z version, Current version, $${PRE_VERSION}) : " TAG ;\
 	mvn versions:set -DnewVersion=$${TAG} ;\
@@ -73,7 +71,11 @@ tag-stage:
 	oc set image dc/kyd-invest kyd-invest=image-registry.openshift-image-registry.svc:5000/classic-dev/kyd-invest:$${TAG} -n classic-dev;\
 	echo "Release $${TAG} has been deployed successfullyto stage environment!"
 
-prod:              ## Format code using black & isort.
-	@oc project|grep "quant-invest"
-	oc tag classic-dev/	
-	java -jar target/quarkus-app/quarkus-run.jar
+.PHONY: deployprod test1
+deployprod:              ## Format code using black & isort.
+	@oc apply -f .openshift/prod/cm.yaml
+	@oc apply -f .openshift/prod/dc.yaml
+	oc tag classic-dev/kyd-invest:$${TAG} quant-invest/kyd-invest:$${TAG};\
+	oc set image dc/kyd-invest kyd-invest=image-registry.openshift-image-registry.svc:5000/quant-invest/kyd-invest:$${TAG} -n quant-invest;\
+	echo "Release $${TAG} has been deployed successfullyto production🚀!"	
+
