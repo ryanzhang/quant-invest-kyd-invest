@@ -27,3 +27,8 @@ lint:             ## Run pep8, black, mypy linters.
 	$(ENV_PREFIX)black -l 79 --check kupy/
 	$(ENV_PREFIX)black -l 79 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports kupy/
+
+.PHONY: dev
+dev:              ## Format code using black & isort.
+	mvn clean package
+	java -jar target/quarkus-app/quarkus-run.jar
