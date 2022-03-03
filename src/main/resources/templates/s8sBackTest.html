@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">任务批次(jobId)</th>
+            <th scope="col">最终收益(倍)</th>
+            <th scope="col">年化收益(%)</th>
+            <th scope="col">最大回撤(%)</th>
+            <th scope="col">最大收益(%)</th>
+            <th scope="col">设置的参数(params)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#for s8s in all} 
+          <tr>
+            <th scope="row">{s8s.jobId}</th>
+            <td>{s8s.finalROI}</td>
+            <td>{s8s.annuROI}</td>
+            <td>{s8s.maxDrawback}</td>
+            <td>{s8s.maxROI}</td>
+            <td>{s8s.params}</td>
+          </tr>
+          {/for}
+        </tbody>
+      </table>
+</body>
+</html>

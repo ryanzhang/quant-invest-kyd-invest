@@ -12,10 +12,9 @@ public class AccountResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
-                .when().get("/api/equity")
+                .when().get("/api/backtest/s8s")
                 .then()
-                .statusCode(200)
-                .body("Majesty", equalTo("Welcome to Quant Invest!"));
+                .statusCode(200);
 
     }
 
