@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.cgc.horizon0.account.domain.Small8BackTest;
 import com.cgc.horizon0.account.domain.W10BackTest;
 
 import io.quarkus.qute.Template;
@@ -39,17 +40,17 @@ public class BackTestPage {
     public String render_s8s(@QueryParam("job_id") String job_id, @QueryParam("params")String params) {
         log.info("job_id:" + job_id);
         log.info("params:" + params);
-        List<W10BackTest> s8s = null;
+        List<Small8BackTest> s8s = null;
         if (job_id == null){
-            s8s = W10BackTest.listAll();
+            s8s = Small8BackTest.listAll();
         }else{
             String searchInput = "%" + job_id + "%";
-            s8s = W10BackTest.list("job_id like ?1", searchInput);
+            s8s = Small8BackTest.list("job_id like ?1", searchInput);
         }
         if (params != null){
             String searchInput = "%" + params + "%";
             log.info("searchInput:" + searchInput);
-            s8s = W10BackTest.list("params like ?1", searchInput);
+            s8s = Small8BackTest.list("params like ?1", searchInput);
         }
 
         String html = "<h1>数据渲染有问题，请访问/api/dys/s8s/ 获取json格式结果</h1>";
