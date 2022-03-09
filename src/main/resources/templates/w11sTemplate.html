@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col"><a href="/dys/w11s?by=jobId" >任务批次(jobId)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=startDate" >起始日期(回测)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=endDate" >结束日期(回测)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=finalROI" >最终收益(倍)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=annuROI" >年化收益(%)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=maxDrawback" >最大回撤(%)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=finalROI" >最大收益(%)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=scParams" >选股参数(scParams)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=rfParams" >排序的参数(rfParams)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=tmParams" >交易模型的参数(tmParams)</a></th>
+            <th scope="col"><a href="/dys/w11s?by=params" >设置的参数(params)</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          {#for w11s in all} 
+          <tr>
+            <th scope="row">{w11s.jobId}</th>
+            <td>{w11s.startDate}</td>
+            <td>{w11s.endDate}</td>
+            <td>{w11s.finalROI}</td>
+            <td>{w11s.annuROI}</td>
+            <td>{w11s.maxDrawback}</td>
+            <td>{w11s.maxROI}</td>
+            <td>{w11s.scParams}</td>
+            <td>{w11s.rfParams}</td>
+            <td>{w11s.tmParams}</td>
+            <td>{w11s.params}</td>
+          </tr>
+          {/for}
+        </tbody>
+      </table>
+</body>
+</html>

@@ -6,14 +6,14 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 @Entity
-@Table(name = "s8s_backtest", schema = "dys")
-public class Small8BackTest extends PanacheEntity {
+@Table(name = "w11s_backtest", schema = "dys")
+public class W11BackTest extends PanacheEntity {
 
     @Column(name = "job_id")
     public String jobId;
@@ -39,7 +39,6 @@ public class Small8BackTest extends PanacheEntity {
     public String rfParams;
     @Column(name = "tm_params", length=340)
     public String tmParams;
-
     @Column(name = "params", length=1024)
     public String params;
 
