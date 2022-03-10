@@ -26,10 +26,13 @@ public class W10BackTest extends PanacheEntity {
 
     @Column(name = "final_roi")
     public Float finalROI; 
+
     @Column(name = "annu_roi")
     public Float annuROI;
+
     @Column(name = "max_drawback")
     public Float maxDrawback;
+
     @Column(name = "max_roi")
     public Float maxROI;
 
@@ -45,5 +48,27 @@ public class W10BackTest extends PanacheEntity {
     @Column(name = "update_time")
     public Date update_time;
 
+    public String getAnnuROI(){
 
+        String x= annuROI.toString();
+        int n=x.indexOf('.');
+        return x.substring(0, n+3);
+    }
+    public String getMaxDrawback(){
+        String x= maxDrawback.toString();
+        int n=x.indexOf(".");
+        return x.substring(0, n+3);
+    }
+
+    public String getFinalROI(){
+        String x= finalROI.toString();
+        int n=x.indexOf('.');
+        return x.substring(0, n+3);
+    }
+
+    public String getMaxROI(){
+        String x= maxROI.toString();
+        int n=x.indexOf('.');
+        return x.substring(0, n+3);
+    }
 }
