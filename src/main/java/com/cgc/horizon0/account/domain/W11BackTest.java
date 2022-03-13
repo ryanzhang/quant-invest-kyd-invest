@@ -36,13 +36,13 @@ public class W11BackTest extends PanacheEntity {
     @Column(name = "max_roi")
     public Float maxROI;
 
-    @Column(name = "sc_params", length=340)
+    @Column(name = "sc_params", length=1024)
     public String scParams;
-    @Column(name = "rf_params", length=340)
+    @Column(name = "rf_params", length=1024)
     public String rfParams;
-    @Column(name = "tm_params", length=340)
+    @Column(name = "tm_params", length=1024)
     public String tmParams;
-    @Column(name = "params", length=1024)
+    @Column(name = "params", length=3096)
     public String params;
 
     @Column(name = "update_time")
